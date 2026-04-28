@@ -15,6 +15,17 @@ export const authenticate = async (req: any, res: any, next: any) => {
 
   try {
     const decode = jwt.verify(token, process.env.JWT_SECRET!) as IDecodedToken;
+
+    if (decode.id === "admin") {
+      req.user = {
+        _id: "admin",
+        name: "Admin",
+        email: process.env.ADMIN_EMAIL,
+        role: "admin",
+      };
+      next();
+    }
+
     const user = await User.findById(decode.id);
 
     if (!user) {

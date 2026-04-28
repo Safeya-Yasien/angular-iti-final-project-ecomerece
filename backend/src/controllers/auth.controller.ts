@@ -38,6 +38,22 @@ const login = async (req: any, res: any, next: any) => {
         .json({ error: "Please provide email and password" });
     }
 
+    if (
+      email === process.env.ADMIN_EMAIL &&
+      password === process.env.ADMIN_PASSWORD
+    ) {
+      const token = jwt.sign(
+        { id: "admin", role: "admin" },
+        process.env.JWT_SECRET!,
+        { expiresIn: process.env.JWT_EXPIRES_IN! as any },
+      );
+
+      return res.status(200).json({
+        message: "Admin Logged in successfully",
+        token,
+      });
+    }
+
     const user = (await User.findOne({ email }).select(
       "+password",
     )) as IUser | null;
