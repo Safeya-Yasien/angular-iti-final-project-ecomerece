@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import User from "../models/User";
+import User from "../models/User.model";
 
 interface IDecodedToken {
   id: string;
@@ -23,7 +23,7 @@ export const authenticate = async (req: any, res: any, next: any) => {
         email: process.env.ADMIN_EMAIL,
         role: "admin",
       };
-      next();
+      return next();
     }
 
     const user = await User.findById(decode.id);
