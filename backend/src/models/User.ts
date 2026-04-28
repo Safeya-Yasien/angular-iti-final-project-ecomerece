@@ -1,6 +1,21 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 
+export interface IUser {
+  name: string;
+  email: string;
+  password: string;
+  role: "admin" | "user";
+  avatar: string;
+  isActive: boolean;
+  lastLogin: Date | null;
+  refreshToken?: string;
+  correctPassword(
+    candidatePassword: string,
+    userPassword: string,
+  ): Promise<boolean>;
+}
+
 const userSchema = new mongoose.Schema(
   {
     name: {
