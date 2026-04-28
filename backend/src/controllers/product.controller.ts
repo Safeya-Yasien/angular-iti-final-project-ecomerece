@@ -59,7 +59,37 @@ const getById = async (req: any, res: any, next: any) => {
   }
 };
 
-const updateById = async (req: any, res: any, next: any) => {};
+const updateById = async (req: any, res: any, next: any) => {
+  const { id } = req.params;
+
+  try {
+    if (!id) {
+      return res.status(400).json({
+        status: "error",
+        message: "id is required",
+      });
+    }
+
+    const product = await Product.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
+
+    if (!product) {
+      return res.status(404).json({
+        status: "error",
+        message: "product not found",
+      });
+    }
+
+    res.status(200).json({
+      status: "success",
+      message: "Product updated successfully",
+      data: product,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
 
 const deleteById = async (req: any, res: any, next: any) => {
   const { id } = req.params;
