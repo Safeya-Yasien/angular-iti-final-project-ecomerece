@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import slugify from "slugify";
 
 export interface IProduct {
   title: string;
@@ -65,6 +66,12 @@ const productSchema = new mongoose.Schema(
     timestamps: true,
   },
 );
+
+productSchema.pre("save", async function () {
+  if (this.isModified("title")) {
+    this.slug = slugify(this.title, { lower: true });
+  }
+});
 
 const Product = mongoose.model("Product", productSchema);
 export default Product;
