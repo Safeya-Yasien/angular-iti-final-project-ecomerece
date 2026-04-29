@@ -1,12 +1,7 @@
 import Product from "../models/Product.model";
-import slugify from "slugify";
 
 const add = async (req: any, res: any, next: any) => {
   try {
-    if (req.body.title) {
-      req.body.slug = slugify(req.body.title, { lower: true });
-    }
-
     const product = await Product.create(req.body);
     res.status(201).json({
       status: "success",
@@ -70,16 +65,16 @@ const updateById = async (req: any, res: any, next: any) => {
       });
     }
 
-    const product = await Product.findByIdAndUpdate(id, req.body, {
-      new: true,
-    });
-
+    const product = await Product.findById(id);
     if (!product) {
       return res.status(404).json({
         status: "error",
         message: "product not found",
       });
     }
+
+    Object.assign(product, req.body);
+    await product.save();
 
     res.status(200).json({
       status: "success",
