@@ -1,0 +1,35 @@
+<div class="container mt-4">
+  <h2>إدارة المنتجات - قائمة المنتجات</h2>
+  
+ <!-- بدلي السطر ده -->
+<a class="btn btn-success mb-3" routerLink="/add-product">إضافة منتج جديد</a>
+  <table class="table table-bordered mt-3">
+    <thead class="table-dark">
+      <tr>
+        <th>الصورة</th>
+        <th>العنوان</th>
+        <th>السعر</th>
+        <th>الكمية</th>
+        <th>العمليات</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (product of products; track product._id) {
+        <tr>
+          <td><img [src]="product.imageCover" width="50" alt="product"></td>
+          <td>{{ product.title }}</td>
+          <td>{{ product.price | currency }}</td>
+          <td>{{ product.quantity }}</td>
+          <td>
+          <button (click)="deleteProduct(product._id!)" class="btn btn-danger btn-sm">حذف</button>
+            <button class="btn btn-warning btn-sm">تعديل</button>
+          </td>
+        </tr>
+      } @empty {
+        <tr>
+          <td colspan="5" class="text-center">لا توجد منتجات حالياً.. تأكدي من إضافة توكن في الـ Interceptor</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

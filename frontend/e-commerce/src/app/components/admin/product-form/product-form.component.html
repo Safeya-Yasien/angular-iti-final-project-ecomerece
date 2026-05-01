@@ -1,0 +1,40 @@
+<div class="container mt-5">
+  <div class="card p-4 shadow">
+    <h3>إضافة منتج جديد</h3>
+    <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label>عنوان المنتج</label>
+        <input type="text" formControlName="title" class="form-control" [ngClass]="{'is-invalid': productForm.get('title')?.invalid && productForm.get('title')?.touched}">
+      </div>
+      
+      <div class="mb-3">
+        <label>الوصف</label>
+        <textarea formControlName="description" class="form-control" rows="3"></textarea>
+        <small class="text-muted">يجب أن يكون أكثر من 20 حرفاً.</small>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label>السعر</label>
+          <input type="number" formControlName="price" class="form-control">
+        </div>
+        <div class="col-md-6 mb-3">
+          <label>الكمية</label>
+          <input type="number" formControlName="quantity" class="form-control">
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label>رابط الصورة</label>
+        <input type="text" formControlName="imageCover" class="form-control">
+      </div>
+
+      <div class="mb-3">
+        <label>رقم القسم (Category ID)</label>
+        <input type="text" formControlName="category" class="form-control">
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100" [disabled]="productForm.invalid">حفظ المنتج</button>
+    </form>
+  </div>
+</div>
