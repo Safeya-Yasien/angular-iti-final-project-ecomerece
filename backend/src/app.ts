@@ -5,6 +5,7 @@ import { connectDB } from "./config/db";
 import authRoute from "./routes/auth.route";
 import productsRoute from "./routes/product.route";
 import categoriesRoute from "./routes/category.route";
+import cartRoute from "./routes/cart.route";
 
 dotenv.config();
 connectDB();
@@ -16,6 +17,7 @@ app.use(express.json());
 app.use("/api/auth", authRoute);
 app.use("/api/products", productsRoute);
 app.use("/api/categories", categoriesRoute);
+app.use("/api/cart", cartRoute);
 
 app.get("/", (req: any, res: any) => {
   res.send("Hello World!");
