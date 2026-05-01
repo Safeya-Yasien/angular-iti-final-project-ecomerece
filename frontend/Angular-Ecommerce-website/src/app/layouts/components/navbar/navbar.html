@@ -14,11 +14,14 @@
         <input
           type="text"
           placeholder="Search products..."
+          [ngModel]="searchQuery()"
+          (ngModelChange)="searchQuery.set($event)"
+          (keyup.enter)="search()"
           class="w-full px-4 py-2 rounded-full bg-white/10 text-white placeholder-gray-300 border border-white/20 focus:outline-none focus:ring-1 focus:ring-amber-400"
         />
       </div>
 
-      <div class="flex flex-wrap gap-2 md:gap-4">
+      <div class="flex flex-wrap items-center gap-2 md:gap-4">
         <a
           routerLink="/home"
           routerLinkActive="text-amber-400"
@@ -70,15 +73,18 @@
           Contact
         </a>
 
-        <a
-          routerLink="/admin"
-          class="flex items-center gap-1 bg-orange-500/20 rounded-full px-3 py-1 text-gray-200 hover:text-amber-400 transition text-sm md:text-base cursor-pointer"
-        >
-          Dashboard
-        </a>
+        @if (isAdmin()) {
+          <a
+            routerLink="/admin"
+            class="flex items-center gap-1 bg-orange-500/20 rounded-full px-3 py-1 text-gray-200 hover:text-amber-400 transition text-sm md:text-base cursor-pointer"
+          >
+            Dashboard
+          </a>
+        }
 
         <a
           routerLink="/cart"
+          routerLinkActive="text-amber-400"
           class="relative flex items-center gap-1 text-gray-200 hover:text-amber-400 transition px-2 py-1 text-sm md:text-base cursor-pointer"
         >
           <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -88,16 +94,84 @@
           </svg>
           Cart
           <span
-            class="absolute -top-1 -right-2 bg-orange-500 text-white text-xs rounded-full px-1.5"
-            >0</span
+            class="absolute -top-1 -right-2 bg-orange-500 text-white text-xs rounded-full px-1.5 min-w-[20px] text-center"
+            >{{ cartCount() }}</span
           >
         </a>
+
+        @if (!isAuthenticated()) {
+          <a
+            routerLink="/login"
+            class="flex items-center gap-1 text-gray-200 hover:text-amber-400 transition px-2 py-1 text-sm md:text-base cursor-pointer"
+          >
+            Sign in
+          </a>
+          <a
+            routerLink="/register"
+            class="hidden md:flex items-center gap-1 bg-amber-500 hover:bg-amber-600 text-white rounded-full px-4 py-1.5 transition text-sm md:text-base cursor-pointer"
+          >
+            Sign up
+          </a>
+        } @else {
+          <div class="relative">
+            <button
+              type="button"
+              (click)="toggleUserMenu()"
+              class="flex items-center gap-2 text-gray-200 hover:text-amber-400 transition px-2 py-1 cursor-pointer"
+            >
+              <span
+                class="w-8 h-8 rounded-full bg-amber-500 text-white flex items-center justify-center font-semibold text-sm"
+              >
+                {{ userInitial() }}
+              </span>
+              <span class="hidden md:inline text-sm">
+                {{ currentUser()?.name || 'Account' }}
+              </span>
+            </button>
+            @if (userMenuOpen()) {
+              <div
+                class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl border border-slate-200 py-1 z-50"
+              >
+                <div class="px-4 py-2 border-b border-slate-100">
+                  <p class="text-sm font-semibold text-slate-900 truncate">
+                    {{ currentUser()?.name }}
+                  </p>
+                  <p class="text-xs text-slate-500 truncate">
+                    {{ currentUser()?.email }}
+                  </p>
+                </div>
+                <a
+                  routerLink="/cart"
+                  (click)="closeUserMenu()"
+                  class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50"
+                  >My cart</a
+                >
+                <a
+                  routerLink="/checkout"
+                  (click)="closeUserMenu()"
+                  class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50"
+                  >Checkout</a
+                >
+                <button
+                  type="button"
+                  (click)="logout()"
+                  class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 cursor-pointer"
+                >
+                  Sign out
+                </button>
+              </div>
+            }
+          </div>
+        }
       </div>
 
       <div class="w-full md:hidden mt-3">
         <input
           type="text"
           placeholder="Search products..."
+          [ngModel]="searchQuery()"
+          (ngModelChange)="searchQuery.set($event)"
+          (keyup.enter)="search()"
           class="w-full px-4 py-2 rounded-full bg-white/10 text-white placeholder-gray-300 border border-white/20 focus:outline-none focus:ring-1 focus:ring-amber-400"
         />
       </div>
