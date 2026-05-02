@@ -52,29 +52,25 @@ export const WEBSITE_ROUTES: Routes = [
   {
     path: 'login',
     canActivate: [guestGuard],
-    loadComponent: () =>
-      import('../../features/auth/login/login').then((c) => c.Login),
+    loadComponent: () => import('../../features/auth/login/login').then((c) => c.Login),
     title: 'Sign in',
   },
   {
     path: 'register',
     canActivate: [guestGuard],
-    loadComponent: () =>
-      import('../../features/auth/register/register').then((c) => c.Register),
+    loadComponent: () => import('../../features/auth/register/register').then((c) => c.Register),
     title: 'Create account',
   },
   {
     path: 'cart',
     canActivate: [authGuard],
-    loadComponent: () =>
-      import('../../features/cart/cart').then((c) => c.CartPage),
+    loadComponent: () => import('../../features/cart/cart').then((c) => c.CartPage),
     title: 'Your Cart',
   },
   {
     path: 'checkout',
     canActivate: [authGuard],
-    loadComponent: () =>
-      import('../../features/checkout/checkout').then((c) => c.CheckoutPage),
+    loadComponent: () => import('../../features/checkout/checkout').then((c) => c.CheckoutPage),
     title: 'Checkout',
   },
   {
