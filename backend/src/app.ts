@@ -4,6 +4,7 @@ import cors from "cors";
 import { connectDB } from "./config/db";
 import authRoute from "./routes/auth.route";
 import productsRoute from "./routes/product.route";
+import usersRoute from "./routes/user.route";
 import categoriesRoute from "./routes/category.route";
 import cartRoute from "./routes/cart.route";
 
@@ -15,6 +16,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/auth", authRoute);
+app.use("/api/users", usersRoute);
 app.use("/api/products", productsRoute);
 app.use("/api/categories", categoriesRoute);
 app.use("/api/cart", cartRoute);
