@@ -8,12 +8,13 @@ import {
   getById,
   updateById,
 } from "../controllers/category.controller";
+import { uploadCategoryImage } from "../middlewares/multer.middleware";
 const router = Router();
 
-router.post("", authenticate, add);
+router.post("", authenticate, uploadCategoryImage, add);
 router.get("", getAll);
 router.get("/:id", getById);
-router.patch("/:id", authenticate, updateById);
+router.patch("/:id", authenticate, uploadCategoryImage, updateById);
 router.delete("/:id", authenticate, deleteById);
 router.delete("/", authenticate, deleteAll);
 

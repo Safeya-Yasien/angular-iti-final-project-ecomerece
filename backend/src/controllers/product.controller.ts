@@ -1,7 +1,10 @@
 import Product from "../models/Product.model";
+import { handleImageUpload } from "../utils/processProductImages";
 
 const add = async (req: any, res: any, next: any) => {
   try {
+    await handleImageUpload(req, "imageCover");
+
     const product = await Product.create(req.body);
     res.status(201).json({
       status: "success",
@@ -15,10 +18,14 @@ const add = async (req: any, res: any, next: any) => {
 
 const getAll = async (req: any, res: any, next: any) => {
   try {
-    const products = await Product.find({});
+    const products = await Product.find({}).populate({
+      path: "category",
+      select: "title",
+    });
 
     res.status(200).json({
       status: "success",
+      count: products.length,
       data: products,
     });
   } catch (err) {
@@ -36,7 +43,10 @@ const getById = async (req: any, res: any, next: any) => {
       });
     }
 
-    const product = await Product.findById(id);
+    const product = await Product.findById(id).populate({
+      path: "category",
+      select: "title",
+    });
 
     if (!product) {
       return res.status(404).json({
@@ -73,8 +83,15 @@ const updateById = async (req: any, res: any, next: any) => {
       });
     }
 
+    await handleImageUpload(req, "imageCover");
+
     Object.assign(product, req.body);
     await product.save();
+
+    await product.populate({
+      path: "category",
+      select: "title",
+    });
 
     res.status(200).json({
       status: "success",

@@ -1,8 +1,12 @@
 import Category from "../models/Category.model";
+import { handleImageUpload } from "../utils/processProductImages";
 
 const add = async (req: any, res: any, next: any) => {
   try {
+    await handleImageUpload(req, "image");
+
     const category = await Category.create(req.body);
+
     res.status(201).json({
       status: "success",
       message: "Category created successfully",
@@ -64,6 +68,7 @@ const updateById = async (req: any, res: any, next: any) => {
         message: "id is required",
       });
     }
+    await handleImageUpload(req, "image");
 
     const category = await Category.findById(id);
 

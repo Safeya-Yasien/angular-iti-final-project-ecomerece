@@ -43,7 +43,6 @@ const productSchema = new mongoose.Schema(
       max: [200000, "Too long product price"],
     },
     priceAfterDiscount: { type: Number },
-
     imageCover: {
       type: String,
       required: [true, "Product Image cover is required"],
