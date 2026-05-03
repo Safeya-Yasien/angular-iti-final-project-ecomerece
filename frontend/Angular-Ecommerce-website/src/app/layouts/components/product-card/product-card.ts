@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { Product } from '../../../core/models/product.model';
 
 @Component({
   selector: 'app-product-card',
@@ -9,10 +10,15 @@ import { RouterLink } from '@angular/router';
   templateUrl: './product-card.html',
 })
 export class ProductCard {
-  @Input() product: any;
-  @Output() add = new EventEmitter<any>();
+  @Input({ required: true }) product!: Product;
+  @Output() add = new EventEmitter<Product>();
 
-  onAddToCart() {
+  handleImageError(event: any) {
+    event.target.src = 'assets/images/placeholder-product.jpg';
+  }
+
+  onAddToCart(event: Event) {
+    event.stopPropagation();
     this.add.emit(this.product);
   }
 }
