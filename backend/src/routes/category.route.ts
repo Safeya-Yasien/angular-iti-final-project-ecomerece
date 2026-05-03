@@ -9,13 +9,26 @@ import {
   updateById,
 } from "../controllers/category.controller";
 import { uploadCategoryImage } from "../middlewares/multer.middleware";
+import roleMiddleware from "../middlewares/role.middleware";
 const router = Router();
 
-router.post("", authenticate, uploadCategoryImage, add);
+router.post(
+  "",
+  authenticate,
+  roleMiddleware(["admin"]),
+  uploadCategoryImage,
+  add,
+);
 router.get("", getAll);
 router.get("/:id", getById);
-router.patch("/:id", authenticate, uploadCategoryImage, updateById);
-router.delete("/:id", authenticate, deleteById);
-router.delete("/", authenticate, deleteAll);
+router.patch(
+  "/:id",
+  authenticate,
+  roleMiddleware(["admin"]),
+  uploadCategoryImage,
+  updateById,
+);
+router.delete("/:id", authenticate, roleMiddleware(["admin"]), deleteById);
+router.delete("/", authenticate, roleMiddleware(["admin"]), deleteAll);
 
 export default router;
