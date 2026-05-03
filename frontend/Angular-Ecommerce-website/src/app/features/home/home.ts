@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core'; // أضفنا OnInit هنا
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { ProductCard } from '../../layouts/components/product-card/product-card';
 import { ProductService } from '../../core/services/product.service';
 import { Product } from '../../core/models/product.model';
+import { CategoryService } from '../../core/services/category.model';
+import { Category } from '../../core/models/category.model';
 
 @Component({
   selector: 'app-home',
@@ -11,31 +13,19 @@ import { Product } from '../../core/models/product.model';
   imports: [CommonModule, RouterLink, ProductCard],
   templateUrl: './home.html',
 })
-export class Home {
-  constructor(private productService: ProductService) {}
+export class Home implements OnInit {
   products: Product[] = [];
-  categories = [
-    {
-      id: 'electronics',
-      name: 'Electronics',
-      image: 'https://images.unsplash.com/photo-1498049794561-7780e7231661?q=80&w=400',
-    },
-    {
-      id: 'fashion',
-      name: 'Fashion',
-      image: 'https://images.unsplash.com/photo-1445205170230-053b83016050?q=80&w=400',
-    },
-    {
-      id: 'accessories',
-      name: 'Accessories',
-      image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=400',
-    },
-    {
-      id: 'home-decor',
-      name: 'Home Decor',
-      image: 'https://images.unsplash.com/photo-1484101403633-562f891dc89a?q=80&w=400',
-    },
-  ];
+  categories: Category[] = [];
+
+  constructor(
+    private productService: ProductService,
+    private categoryService: CategoryService,
+  ) {}
+
+  ngOnInit(): void {
+    this.loadProducts();
+    this.loadCategories();
+  }
 
   loadProducts() {
     this.productService.getProducts().subscribe({
@@ -44,6 +34,17 @@ export class Home {
       },
       error: (err) => {
         console.error('Error fetching products:', err);
+      },
+    });
+  }
+
+  loadCategories() {
+    this.categoryService.getCategories().subscribe({
+      next: (data) => {
+        this.categories = data.slice(0, 4);
+      },
+      error: (err) => {
+        console.error('Error fetching categories:', err);
       },
     });
   }
