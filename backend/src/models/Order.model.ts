@@ -5,11 +5,9 @@ export interface IOrder {
   slug: string;
   description: string;
   quantity: number;
-  sold: number;
   price: number;
   priceAfterDiscount?: number;
   imageCover: string;
-  images: string[];
   category: mongoose.Types.ObjectId;
   ratingsAverage?: number;
   ratingsQuantity?: number;

@@ -1,17 +1,13 @@
 import Order from "../models/Order.model";
-import { handleImageUpload } from "../utils/processProductImages";
 
 const getAll = async (req: any, res: any, next: any) => {
   try {
-    const products = await Product.find({}).populate({
-      path: "category",
-      select: "title",
-    });
+    const orders = await Order.find({});
 
     res.status(200).json({
       status: "success",
-      count: products.length,
-      data: products,
+      count: orders.length,
+      data: orders,
     });
   } catch (err) {
     next(err);
@@ -29,18 +25,18 @@ const cancel = async (req: any, res: any, next: any) => {
       });
     }
 
-    const product = await Product.findByIdAndDelete(id);
+    const order = await Order.findByIdAndDelete(id);
 
-    if (!product) {
+    if (!order) {
       return res.status(404).json({
         status: "error",
-        message: "Product not found",
+        message: "Order not found",
       });
     }
 
     res.status(200).json({
       status: "success",
-      message: "Product deleted successfully",
+      message: "Order deleted successfully",
     });
   } catch (err) {
     next(err);
