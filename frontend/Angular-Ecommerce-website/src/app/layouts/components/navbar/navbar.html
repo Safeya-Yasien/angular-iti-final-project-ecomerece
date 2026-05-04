@@ -25,7 +25,7 @@
       <div class="flex flex-wrap items-center gap-2 md:gap-4">
         <a
           routerLink="/home"
-          routerLinkActive="text-amber-400"
+          routerLinkActive="!text-amber-400"
           [routerLinkActiveOptions]="{ exact: true }"
           class="flex items-center gap-1 text-gray-200 hover:text-amber-400 transition px-2 py-1 text-sm md:text-base cursor-pointer"
         >
@@ -37,7 +37,7 @@
 
         <a
           routerLink="/about"
-          routerLinkActive="text-amber-400"
+          routerLinkActive="!text-amber-400"
           class="flex items-center gap-1 text-gray-200 hover:text-amber-400 transition px-2 py-1 text-sm md:text-base cursor-pointer"
         >
           <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -50,7 +50,7 @@
 
         <a
           routerLink="/shop"
-          routerLinkActive="text-amber-400"
+          routerLinkActive="!text-amber-400"
           class="flex items-center gap-1 text-gray-200 hover:text-amber-400 transition px-2 py-1 text-sm md:text-base cursor-pointer"
         >
           <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -63,7 +63,7 @@
 
         <a
           routerLink="/contact"
-          routerLinkActive="text-amber-400"
+          routerLinkActive="!text-amber-400"
           class="flex items-center gap-1 text-gray-200 hover:text-amber-400 transition px-2 py-1 text-sm md:text-base cursor-pointer"
         >
           <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -77,6 +77,7 @@
         @if (isAdmin()) {
           <a
             routerLink="/admin"
+            routerLinkActive="!text-amber-400"
             class="flex items-center gap-1 bg-orange-500/20 rounded-full px-3 py-1 text-gray-200 hover:text-amber-400 transition text-sm md:text-base cursor-pointer"
           >
             Dashboard
@@ -85,7 +86,7 @@
 
         <a
           routerLink="/cart"
-          routerLinkActive="text-amber-400"
+          routerLinkActive="!text-amber-400"
           class="relative flex items-center gap-1 text-gray-200 hover:text-amber-400 transition px-2 py-1 text-sm md:text-base cursor-pointer"
         >
           <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -103,6 +104,7 @@
         @if (!isAuthenticated()) {
           <a
             routerLink="/login"
+            routerLinkActive="!text-amber-400"
             class="flex items-center gap-1 text-gray-200 hover:text-amber-400 transition px-2 py-1 text-sm md:text-base cursor-pointer"
           >
             Sign in
@@ -137,12 +139,14 @@
                 </div>
                 <a
                   routerLink="/cart"
+                  routerLinkActive="!text-amber-400"
                   (click)="closeUserMenu()"
                   class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50"
                   >My cart</a
                 >
                 <a
                   routerLink="/checkout"
+                  routerLinkActive="!text-amber-400"
                   (click)="closeUserMenu()"
                   class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50"
                   >Checkout</a

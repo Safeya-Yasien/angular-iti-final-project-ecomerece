@@ -55,6 +55,6 @@ export class Navbar implements OnInit {
   search(): void {
     const q = this.searchQuery().trim();
     if (!q) return;
-    this.router.navigate(['/shop/search'], { queryParams: { q } });
+    this.router.navigate(['/shop'], { queryParams: { q } });
   }
 }
