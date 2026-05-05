@@ -21,9 +21,15 @@ export class OrderService {
     });
   }
 
-  myOrders(): Observable<{ status: string; data: unknown[] }> {
-    return this.http.get<{ status: string; data: unknown[] }>(
-      `${this.base}/me`,
+  myOrders(): Observable<{ status: string; count?: number; data: unknown[] }> {
+    return this.http.get<{ status: string; count?: number; data: unknown[] }>(
+      `${this.base}/my-orders`,
+    );
+  }
+
+  cancelOrder(id: string): Observable<{ status: string; message?: string; data: unknown }> {
+    return this.http.delete<{ status: string; message?: string; data: unknown }>(
+      `${this.base}/${id}`,
     );
   }
 }
