@@ -67,10 +67,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "Angular-Ecommerce-Final-Project:build:production"
+              "buildTarget": "Angular-E-commerce-Final-Project:build:production"
             },
             "development": {
-              "buildTarget": "Angular-Ecommerce-Final-Project:build:development"
+              "buildTarget": "Angular-E-commerce-Final-Project:build:development"
             }
           },
           "defaultConfiguration": "development"
