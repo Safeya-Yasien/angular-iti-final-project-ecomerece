@@ -129,17 +129,35 @@
             <app-product-card [product]="product"></app-product-card>
           }
         } @else {
-          <p class="text-gray-500 col-span-full text-center">No products available.</p>
-        }
-      </div>
+          <div
+            class="col-span-full py-20 px-6 flex flex-col items-center justify-center text-center bg-slate-50 rounded-[2rem] border-2 border-dashed border-slate-200 transition-all"
+          >
+            <div
+              class="w-24 h-24 bg-white rounded-full shadow-sm flex items-center justify-center mb-6 border border-slate-100"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-12 w-12 text-slate-300"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.5"
+                  d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+                />
+              </svg>
+            </div>
 
-      <div class="text-center mt-16">
-        <button
-          routerLink="/shop"
-          class="bg-slate-900 text-white px-12 py-4 rounded-full font-bold hover:bg-amber-400 hover:text-slate-900 transition shadow-lg transform hover:-translate-y-1"
-        >
-          Explore All Products →
-        </button>
+            <h3 class="text-2xl font-bold text-slate-800 mb-2">No products found</h3>
+            <p class="text-slate-500 max-w-sm mb-8 leading-relaxed">
+              We couldn't find any items matching your current selection. Try exploring other
+              categories or clear your filters.
+            </p>
+          </div>
+        }
       </div>
     </div>
   </section>

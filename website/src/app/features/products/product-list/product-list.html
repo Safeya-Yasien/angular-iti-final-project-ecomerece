@@ -21,12 +21,45 @@
         <app-product-card [product]="item" (add)="onAddToCart($event)"></app-product-card>
       }
     } @else if (isLoading) {
-      <div class="col-span-full text-center py-10">
-        <p class="text-slate-500 animate-pulse">Loading products, please wait...</p>
-      </div>
+      @for (i of [1, 2, 3, 4, 5, 6, 7, 8]; track i) {
+        <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100 animate-pulse">
+          <div class="bg-slate-200 h-48 w-full rounded-xl mb-4"></div>
+          <div class="h-4 bg-slate-200 rounded-full w-3/4 mb-3"></div>
+          <div class="h-3 bg-slate-200 rounded-full w-1/2 mb-6"></div>
+          <div class="flex justify-between items-center">
+            <div class="h-6 bg-slate-200 rounded-full w-1/4"></div>
+            <div class="h-8 bg-slate-200 rounded-lg w-1/4"></div>
+          </div>
+        </div>
+      }
     } @else {
-      <div class="col-span-full text-center py-10">
-        <p class="text-slate-500">No products found at the moment.</p>
+      <div
+        class="col-span-full flex flex-col items-center justify-center py-24 px-6 bg-slate-50 rounded-3xl border-2 border-dashed border-slate-200 transition-all"
+      >
+        <div
+          class="w-20 h-20 bg-white rounded-full shadow-sm flex items-center justify-center mb-6 border border-slate-100"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-10 w-10 text-slate-300"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="1.5"
+              d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
+            />
+          </svg>
+        </div>
+
+        <h3 class="text-xl font-bold text-slate-800 mb-2">No products found</h3>
+        <p class="text-slate-500 text-center max-w-xs mb-8">
+          We couldn't find any products in this category. Try adjusting your filters or search
+          criteria.
+        </p>
       </div>
     }
   </div>
