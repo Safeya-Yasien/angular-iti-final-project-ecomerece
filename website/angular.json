@@ -41,9 +41,12 @@
           },
           "configurations": {
             "production": {
-              "define": {
-                "process.env.apiUrl": "'angular-iti-final-project-ecomerece-backend/api'"
-              },
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
               "budgets": [
                 {
                   "type": "initial",
