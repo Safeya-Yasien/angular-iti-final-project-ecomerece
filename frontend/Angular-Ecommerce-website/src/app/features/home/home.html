@@ -98,7 +98,7 @@
       </div>
 
       <div class="flex flex-wrap gap-3 mx-auto justify-center items-center">
-        @for (category of categories; track category._id) {
+        @for (category of categories(); track category._id) {
           <button
             class="px-8 py-3 rounded-xl border-2 border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-bold hover:bg-amber-500 hover:border-amber-500 hover:text-white transition-all duration-300 active:scale-95 shadow-sm hover:shadow-md"
           >
@@ -110,17 +110,22 @@
   </section>
 
   <section class="py-20 bg-slate-50">
-    <div class="max-w-7xl mx-auto">
+    <div class="max-w-7xl mx-auto px-1">
       <div class="flex flex-wrap justify-between items-center gap-4 mb-10">
-        <div>
-          <h2 class="text-3xl font-bold text-slate-900">Trending Products</h2>
-          <p class="text-gray-500 mt-2">Best sellers this week</p>
+        <div class="relative pl-4 border-l-4 border-amber-400">
+          <h2 class="text-3xl md:text-4xl font-black tracking-tight text-slate-900 uppercase">
+            Trending
+            <span class="text-transparent bg-clip-text bg-linear-to-r from-amber-500 to-orange-300"
+              >Products</span
+            >
+          </h2>
+          <p class="text-slate-500 mt-1 font-medium italic">Best sellers this week</p>
         </div>
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-        @if (products && products.length > 0) {
-          @for (product of products; track product._id) {
+        @if (products() && products().length > 0) {
+          @for (product of products(); track product._id) {
             <app-product-card [product]="product"></app-product-card>
           }
         } @else {

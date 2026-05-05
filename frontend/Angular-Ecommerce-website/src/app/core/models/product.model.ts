@@ -7,6 +7,14 @@ export interface Product {
   ratingsQuantity: number;
   ratingsAverage?: number;
   quantity: number;
+  sold: string;
+  images: Array<string>;
+  category: {
+    _id?: string;
+    name: string;
+    slug?: string;
+    image?: string;
+  };
 }
 
 export interface ApiResponse {

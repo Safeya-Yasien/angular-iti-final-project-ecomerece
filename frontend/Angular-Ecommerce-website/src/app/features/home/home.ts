@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core'; // أضفنا OnInit هنا
+import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { ProductCard } from '../../layouts/components/product-card/product-card';
 import { ProductService } from '../../core/services/product.service';
 import { Product } from '../../core/models/product.model';
-import { CategoryService } from '../../core/services/category.model';
 import { Category } from '../../core/models/category.model';
+import { CategoryService } from '../../core/services/category.model';
 
 @Component({
   selector: 'app-home',
@@ -14,8 +14,8 @@ import { Category } from '../../core/models/category.model';
   templateUrl: './home.html',
 })
 export class Home implements OnInit {
-  products: Product[] = [];
-  categories: Category[] = [];
+  products = signal<Product[]>([]);
+  categories = signal<Category[]>([]);
 
   constructor(
     private productService: ProductService,
@@ -30,24 +30,21 @@ export class Home implements OnInit {
   loadProducts() {
     this.productService.getProducts().subscribe({
       next: (data) => {
-        this.products = data.slice(0, 4);
+        this.products.set(data.slice(0, 4));
       },
-      error: (err) => {
-        console.error('Error fetching products:', err);
-      },
+      error: (err) => console.error('Error fetching products:', err),
     });
   }
 
   loadCategories() {
     this.categoryService.getCategories().subscribe({
       next: (data) => {
-        this.categories = data.slice(0, 4);
+        this.categories.set(data.slice(0, 4));
       },
-      error: (err) => {
-        console.error('Error fetching categories:', err);
-      },
+      error: (err) => console.error('Error fetching categories:', err),
     });
   }
+
   addToCart(product: Product) {
     console.log('Cart:', product);
     alert(`${product.title} added to cart!`);

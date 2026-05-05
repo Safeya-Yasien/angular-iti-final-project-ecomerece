@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { Product } from '../../../core/models/product.model';
+import { ProductService } from '../../../core/services/product.service';
 
 @Component({
   selector: 'app-product-details',
@@ -9,23 +11,45 @@ import { CommonModule } from '@angular/common';
   templateUrl: './product-details.html',
 })
 export class ProductDetails implements OnInit {
-  product: any;
+  product = signal<Product | null>(null);
+  activeImage = signal<string | null>(null); // New signal for gallery toggle
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(
+    private route: ActivatedRoute,
+    private productService: ProductService,
+  ) {}
 
-  ngOnInit() {
-    const productId = this.route.snapshot.paramMap.get('id');
+  ngOnInit(): void {
+    this.route.paramMap.subscribe((params) => {
+      const id = params.get('id');
+      if (id) {
+        this.loadProduct(id);
+      }
+    });
+  }
 
-    this.product = {
-      id: productId,
-      name: 'Premium Headphones',
-      price: 299,
-      description:
-        'Experience studio-quality sound with these high-end noise-canceling headphones. Perfect for long listening sessions.',
-      image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e',
-      rating: 4.8,
-      reviews: 124,
-      badge: 'Best Seller',
-    };
+  loadProduct(id: string) {
+    this.productService.getProductById(id).subscribe({
+      next: (data) => {
+        this.product.set(data);
+        // Set initial main image
+        if (data.imageCover) {
+          this.activeImage.set(data.imageCover);
+        }
+      },
+      error: (err) => console.error('Error fetching product:', err),
+    });
+  }
+
+  addToCart(product: Product) {
+    if (product.quantity > 0) {
+      console.log('Cart:', product);
+      alert(`${product.title} added to cart!`);
+    }
+  }
+
+  addToWishlist(product: Product) {
+    console.log('Wishlist:', product);
+    alert(`${product.title} added to wishlist! ❤️`);
   }
 }
