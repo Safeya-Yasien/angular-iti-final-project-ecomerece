@@ -11,9 +11,17 @@ import ordersRoute from "./routes/order.route";
 
 dotenv.config();
 connectDB();
+const corsConfig = {
+  origin: [
+    "http://localhost:4200",
+    "http://localhost:3000",
+    "http://localhost:8080",
+    "",
+  ],
+};
 
 const app = express();
-app.use(cors());
+app.use(cors(corsConfig));
 app.use(express.json());
 
 app.use("/api/auth", authRoute);
