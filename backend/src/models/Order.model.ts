@@ -1,61 +1,59 @@
 import mongoose from "mongoose";
 
 export interface IOrder {
-  title: string;
-  slug: string;
-  description: string;
-  quantity: number;
-  price: number;
-  priceAfterDiscount?: number;
-  imageCover: string;
-  category: mongoose.Types.ObjectId;
-  ratingsAverage?: number;
-  ratingsQuantity?: number;
+  user: mongoose.Types.ObjectId;
+  orderItems: {
+    product: mongoose.Types.ObjectId;
+    quantity: number;
+    price: number;
+  }[];
+  shippingAddress: {
+    city: string;
+    street: string;
+    phone: string;
+  };
+  totalPrice: number;
+  paymentMethod: string;
+  status: string;
 }
 
-const orderSchema = new mongoose.Schema(
+const orderSchema = new mongoose.Schema<IOrder>(
   {
-    title: {
-      type: String,
-      required: [true, "Product title is required"],
-      trim: true,
-      minlength: [3, "Too short product title"],
-    },
-
-    slug: { type: String, lowercase: true },
-    description: {
-      type: String,
-      required: [true, "Product description is required"],
-      minlength: [20, "Too short product description"],
-    },
-
-    quantity: {
-      type: Number,
-      required: [true, "Product quantity is required"],
-    },
-    sold: { type: Number, default: 0 },
-    price: {
-      type: Number,
-      required: [true, "Product price is required"],
-      max: [200000, "Too long product price"],
-    },
-    priceAfterDiscount: { type: Number },
-    imageCover: {
-      type: String,
-      required: [true, "Product Image cover is required"],
-    },
-    images: [String],
-    category: {
+    user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Category",
-      required: [true, "Product must be belong to category"],
+      ref: "user",
+      required: [true, "Order must belong to a user"],
     },
-    ratingsAverage: {
+    orderItems: [
+      {
+        product: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Product",
+          required: true,
+        },
+        quantity: { type: Number, required: true },
+        price: { type: Number, required: true },
+      },
+    ],
+    shippingAddress: {
+      city: { type: String, required: true },
+      street: { type: String, required: true },
+      phone: { type: String, required: true },
+    },
+    totalPrice: {
       type: Number,
-      min: [1, "Rating must be above or equal 1.0"],
-      max: [5, "Rating must be below or equal 5.0"],
+      required: true,
     },
-    ratingsQuantity: { type: Number, default: 0 },
+    paymentMethod: {
+      type: String,
+      enum: ["card", "cash"],
+      default: "cash",
+    },
+    status: {
+      type: String,
+      enum: ["pending", "delivered", "cancelled"],
+      default: "pending",
+    },
   },
 
   {

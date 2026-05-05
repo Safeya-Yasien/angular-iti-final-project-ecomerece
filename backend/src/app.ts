@@ -7,6 +7,7 @@ import productsRoute from "./routes/product.route";
 import usersRoute from "./routes/user.route";
 import categoriesRoute from "./routes/category.route";
 import cartRoute from "./routes/cart.route";
+import ordersRoute from "./routes/order.route";
 
 dotenv.config();
 connectDB();
@@ -20,6 +21,7 @@ app.use("/api/users", usersRoute);
 app.use("/api/products", productsRoute);
 app.use("/api/categories", categoriesRoute);
 app.use("/api/cart", cartRoute);
+app.use("/api/orders", ordersRoute);
 
 app.get("/", (req: any, res: any) => {
   res.send("Hello World!");
