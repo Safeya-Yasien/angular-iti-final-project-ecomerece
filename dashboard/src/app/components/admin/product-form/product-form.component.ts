@@ -15,6 +15,7 @@ import Swal from 'sweetalert2';
 export class AddProductComponent implements OnInit {
   productForm!: FormGroup;
   selectedFile: File | null = null;
+
   constructor(
     private fb: FormBuilder,
     private productSer: ProductService,
@@ -27,11 +28,9 @@ export class AddProductComponent implements OnInit {
       description: ['', [Validators.required, Validators.minLength(20)]],
       price: [0, [Validators.required, Validators.min(1)]],
       quantity: [0, [Validators.required, Validators.min(1)]],
-      category: ['', Validators.required] 
-     
+      category: ['', Validators.required]
     });
   }
-
 
   onFileSelect(event: any) {
     const file = event.target.files[0];
@@ -42,45 +41,45 @@ export class AddProductComponent implements OnInit {
 
   onSubmit() {
     if (this.productForm.valid && this.selectedFile) {
-      // 1. إنشاء كائن FormData لجمع البيانات والملف معاً
       const formData = new FormData();
-      
 
+      // إضافة البيانات للـ FormData
       formData.append('title', this.productForm.get('title')?.value);
       formData.append('description', this.productForm.get('description')?.value);
       formData.append('price', this.productForm.get('price')?.value);
       formData.append('quantity', this.productForm.get('quantity')?.value);
       formData.append('category', this.productForm.get('category')?.value);
-      
-      // 3. إضافة الصورة المختارة بالاسم اللي الـ Backend مستنيه (imageCover)
       formData.append('imageCover', this.selectedFile);
 
-      // 4. إرسال الـ FormData للـ Service
       this.productSer.addProduct(formData).subscribe({
         next: (res) => {
           Swal.fire({
-            title: 'تمت الإضافة!',
-            text: 'تم رفع الصورة وإضافة المنتج بنجاح',
-            icon: 'success',
+            title: "Added Successfully",
+            text: "Product and image have been uploaded",
+            icon: "success",
             timer: 2000,
             showConfirmButton: false
           });
-          
           this.productForm.reset();
           this.selectedFile = null;
-          this.router.navigate(['/admin/products']);
+          this.router.navigate(["/admin/products"]);
         },
         error: (err) => {
           Swal.fire({
-            title: 'خطأ!',
-            text: 'تأكدي من اتصال الـ Backend بـ Cloudinary وحجم الصورة',
-            icon: 'error'
+            title: "Failed",
+            text: "Something went wrong, please check your connection",
+            icon: "error"
           });
           console.error(err);
         }
       });
     } else {
-      Swal.fire('تنبيه', 'يرجى ملء كافة البيانات واختيار صورة المنتج', 'warning');
+     
+      Swal.fire({
+        title: "Warning",
+        text: "Please fill all fields and choose a product image",
+        icon: "warning"
+      });
     }
   }
 }

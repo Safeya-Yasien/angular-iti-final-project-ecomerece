@@ -13,6 +13,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./edit-product.component.css']
 })
 export class EditProductComponent implements OnInit {
+    selectedFile: File | null = null;
   editForm!: FormGroup;
   productId!: string;
 
@@ -29,6 +30,13 @@ export class EditProductComponent implements OnInit {
     this.loadProduct();
   }
 
+
+   onFileSelect(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      this.selectedFile = file;
+    }
+  }
   initForm() {
     this.editForm = this.fb.group({
       title: ['', [Validators.required, Validators.minLength(3)]],
@@ -71,9 +79,23 @@ loadProduct() {
 
 
 onUpdate() {
-  if (this.editForm.valid) {
-    console.log('produc id', typeof this.productId)
-    this.productSer.updateProduct(this.productId, this.editForm.value).subscribe({
+
+ if (this.editForm.valid) {
+      const formData = new FormData();
+
+      // إضافة البيانات للـ FormData
+      formData.append('title', this.editForm.get('title')?.value);
+      formData.append('description', this.editForm.get('description')?.value);
+      formData.append('price', this.editForm.get('price')?.value);
+      formData.append('quantity', this.editForm.get('quantity')?.value);
+      formData.append('category', this.editForm.get('category')?.value);
+      if (this.selectedFile) {
+          formData.append('imageCover', this.selectedFile);
+      }
+    
+
+
+    this.productSer.updateProduct(this.productId, formData).subscribe({
       next: () => {
         Swal.fire({
         title: 'Updated!',
