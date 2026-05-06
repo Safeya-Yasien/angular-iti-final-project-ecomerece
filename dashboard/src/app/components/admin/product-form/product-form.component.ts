@@ -3,21 +3,23 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { ProductService } from '../../../services/product.service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-
-// src/app/components/admin/product-form/product-form.component.ts
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-add-product',
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule],
-  templateUrl: './product-form.component.html', // 👈 غيري الاسم هنا ليتطابق مع الملف اللي في الفولدر
-  styleUrl: './product-form.component.css'      // وتأكدي من اسم ملف الـ CSS كمان بالمرة
+  templateUrl: './product-form.component.html',
+  styleUrl: './product-form.component.css'
 })
 export class AddProductComponent implements OnInit {
   productForm!: FormGroup;
+  selectedFile: File | null = null; // متغير لحفظ ملف الصورة المختار
 
-  constructor(private fb: FormBuilder, private productSer: ProductService,
-     private router: Router
+  constructor(
+    private fb: FormBuilder,
+    private productSer: ProductService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -26,24 +28,60 @@ export class AddProductComponent implements OnInit {
       description: ['', [Validators.required, Validators.minLength(20)]],
       price: [0, [Validators.required, Validators.min(1)]],
       quantity: [0, [Validators.required, Validators.min(1)]],
-      imageCover: ['', Validators.required],
-      category: ['', Validators.required] // لازم ID حقيقي
+      category: ['', Validators.required] 
+     
     });
   }
 
+
+  onFileSelect(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      this.selectedFile = file;
+    }
+  }
+
   onSubmit() {
-    if (this.productForm.valid) {
-      this.productSer.addProduct(this.productForm.value).subscribe({
+    if (this.productForm.valid && this.selectedFile) {
+      // 1. إنشاء كائن FormData لجمع البيانات والملف معاً
+      const formData = new FormData();
+      
+
+      formData.append('title', this.productForm.get('title')?.value);
+      formData.append('description', this.productForm.get('description')?.value);
+      formData.append('price', this.productForm.get('price')?.value);
+      formData.append('quantity', this.productForm.get('quantity')?.value);
+      formData.append('category', this.productForm.get('category')?.value);
+      
+      // 3. إضافة الصورة المختارة بالاسم اللي الـ Backend مستنيه (imageCover)
+      formData.append('imageCover', this.selectedFile);
+
+      // 4. إرسال الـ FormData للـ Service
+      this.productSer.addProduct(formData).subscribe({
         next: (res) => {
-          alert('تم إضافة المنتج بنجاح!');
+          Swal.fire({
+            title: 'تمت الإضافة!',
+            text: 'تم رفع الصورة وإضافة المنتج بنجاح',
+            icon: 'success',
+            timer: 2000,
+            showConfirmButton: false
+          });
+          
           this.productForm.reset();
-             this.router.navigate(['/products']);
+          this.selectedFile = null;
+          this.router.navigate(['/products']);
         },
         error: (err) => {
-          console.error('خطأ في الإضافة:', err);
-          alert('فشلت الإضافة.. تأكدي من التوكن وصلاحية الـ ID');
+          Swal.fire({
+            title: 'خطأ!',
+            text: 'تأكدي من اتصال الـ Backend بـ Cloudinary وحجم الصورة',
+            icon: 'error'
+          });
+          console.error(err);
         }
       });
+    } else {
+      Swal.fire('تنبيه', 'يرجى ملء كافة البيانات واختيار صورة المنتج', 'warning');
     }
   }
 }
