@@ -4,7 +4,7 @@
       <h2>Product Management</h2>
       <p class="subtitle">Manage and monitor your inventory items</p>
     </div>
-    <button class="btn-add" routerLink="/add-product">
+    <button class="btn-add" routerLink="/admin/add-product">
       <i class="fas fa-plus"></i> Add New Product
     </button>
   </div>
@@ -41,7 +41,7 @@
             </span>
           </td>
           <td class="actions">
-            <button [routerLink]="['/edit-product', product._id]" class="btn-edit">
+            <button [routerLink]="['/admin/edit-product', product._id]" class="btn-edit">
               Edit
             </button>
             <button (click)="deleteProduct(product._id!)" class="btn-delete">

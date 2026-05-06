@@ -38,7 +38,7 @@ export class LoginComponent {
           if (res.token) {
             localStorage.setItem('token', res.token);
             alert('تم تسجيل الدخول بنجاح!');
-            this.router.navigate(['/products']); // اذهبي لصفحة المنتجات بعد النجاح
+            this.router.navigate(['/admin/products']); // اذهبي لصفحة المنتجات بعد النجاح
           }
         },
         error: (err) => {

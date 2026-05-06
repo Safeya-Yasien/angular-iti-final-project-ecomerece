@@ -14,8 +14,7 @@ import Swal from 'sweetalert2';
 })
 export class AddProductComponent implements OnInit {
   productForm!: FormGroup;
-  selectedFile: File | null = null; // متغير لحفظ ملف الصورة المختار
-
+  selectedFile: File | null = null;
   constructor(
     private fb: FormBuilder,
     private productSer: ProductService,
