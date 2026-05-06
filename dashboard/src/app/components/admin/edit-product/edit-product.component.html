@@ -34,7 +34,7 @@
       <!-- Image URL -->
       <div class="form-group">
         <label>Image Cover URL</label>
-        <input type="text" formControlName="imageCover" placeholder="https://example.com/image.jpg">
+ <input type="file" (change)="onFileSelect($event)">
       </div>
 
       <!-- Category ID -->
