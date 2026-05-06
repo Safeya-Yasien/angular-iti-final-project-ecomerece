@@ -82,7 +82,7 @@ onUpdate() {
             timer: 2000,
             showConfirmButton: false
         });
-        this.router.navigate(['/products']);
+        this.router.navigate(['/admin/products']);
       },
       error: (err) => {
         Swal.fire({

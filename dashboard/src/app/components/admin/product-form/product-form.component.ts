@@ -68,7 +68,7 @@ export class AddProductComponent implements OnInit {
           
           this.productForm.reset();
           this.selectedFile = null;
-          this.router.navigate(['/products']);
+          this.router.navigate(['/admin/products']);
         },
         error: (err) => {
           Swal.fire({
