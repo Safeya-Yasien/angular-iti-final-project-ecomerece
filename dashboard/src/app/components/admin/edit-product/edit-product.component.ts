@@ -16,6 +16,7 @@ export class EditProductComponent implements OnInit {
     selectedFile: File | null = null;
   editForm!: FormGroup;
   productId!: string;
+  categories: any[] = []; 
 
   constructor(
     private fb: FormBuilder,
@@ -27,7 +28,9 @@ export class EditProductComponent implements OnInit {
   ngOnInit(): void {
     this.initForm();
     this.productId = this.route.snapshot.params['id'];
+        this.loadCategories();
     this.loadProduct();
+       
   }
 
 
@@ -57,7 +60,7 @@ loadProduct() {
       this.editForm.get('description')?.setValue(res.data.description);
       this.editForm.get('quantity')?.setValue(res.data.quantity);
       this.editForm.get('imageCover')?.setValue(res.data.imageCover);
-      this.editForm.get('category')?.setValue(res.data.category);
+      this.editForm.get('category')?.setValue(res.data.category._id);
       
       
     }
@@ -66,6 +69,17 @@ loadProduct() {
 
 
 
+  loadCategories() {
+    this.productSer.getAllCategories().subscribe({
+      next: (res) => {
+        this.categories = res.data;
+        console.log('Categories loaded successfully');
+      },
+      error: (err) => {
+        console.error('Failed to load categories', err);
+      }
+    });
+  }
   // loadProduct() {
   //   this.productSer.getProductById(this.productId).subscribe({
   //     next: (res) => {

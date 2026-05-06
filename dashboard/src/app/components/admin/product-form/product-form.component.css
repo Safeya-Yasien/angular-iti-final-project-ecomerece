@@ -111,3 +111,16 @@ input:focus, textarea:focus {
   border-radius: 8px;
   border: 1px dashed #ccc;
 }
+/* في ملف product-form.component.css */
+select.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: white;
+    margin-top: 5px;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
