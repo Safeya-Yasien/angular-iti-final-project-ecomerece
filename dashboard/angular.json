@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "e-commerce": {
+    "dashboard": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/e-commerce",
+            "outputPath": "dist/dashboard",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": ["zone.js"],
@@ -57,10 +57,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "e-commerce:build:production"
+              "buildTarget": "dashboard:build:production"
             },
             "development": {
-              "buildTarget": "e-commerce:build:development"
+              "buildTarget": "dashboard:build:development"
             }
           },
           "defaultConfiguration": "development"
