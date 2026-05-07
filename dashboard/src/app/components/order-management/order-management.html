@@ -21,19 +21,18 @@
         </thead>
         <tbody>
           <tr *ngFor="let order of orders">
-            <td class="fw-bold">#{{ order._id.slice(-6) }}</td> <td>
-              {{ order.user?.name || order.user || 'Guest User' }}
-            </td>
+            <td class="fw-bold">#{{ order._id.slice(-6) }}</td>
+            <td>{{ order.user?.name || order.user || 'Guest User' }}</td>
 
             <td>{{ order.createdAt | date:'mediumDate' }}</td>
-            
+
             <td class="text-success fw-bold">
               {{ order.totalPrice | currency:'USD':'symbol':'1.2-2' }}
             </td>
 
             <td>
-            <select 
-                [value]="order.status" 
+              <select
+                [value]="order.status"
                 (change)="updateStatus(order._id, $event)"
                 class="form-select form-select-sm fw-bold"
                 [ngClass]="{
@@ -42,13 +41,14 @@
                 'text-info border-info': order.status === 'shipped',
                 'text-success border-success': order.status === 'delivered',
                 'text-danger border-danger': order.status === 'cancelled'
-                }">
+                }"
+              >
                 <option value="pending">⏳ Pending</option>
                 <option value="confirmed">✅ Confirmed</option>
                 <option value="shipped">🚚 Shipped</option>
                 <option value="delivered">🏠 Delivered</option>
                 <option value="cancelled">❌ Cancelled</option>
-            </select>
+              </select>
             </td>
 
             <td>
@@ -56,7 +56,7 @@
                 <i class="bi bi-eye"></i> Details
               </button>
               <button class="btn btn-sm btn-outline-danger">
-                <i class="bi bi-trash"></i>
+                <i class="bi bi-trash"></i> Delete
               </button>
             </td>
           </tr>

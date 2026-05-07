@@ -21,7 +21,7 @@ const orderSchema = new mongoose.Schema<IOrder>(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "user",
+      ref: "User",
       required: [true, "Order must belong to a user"],
     },
     orderItems: [
