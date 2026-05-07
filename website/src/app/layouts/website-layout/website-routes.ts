@@ -2,11 +2,10 @@ import { Routes } from '@angular/router';
 import { authGuard, guestGuard } from '../../core/guards/auth.guard';
 
 export const WEBSITE_ROUTES: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
   {
-    path: 'home',
+    path: '',
     loadComponent: () => import('../../features/home/home').then((c) => c.Home),
-    title: 'Home | Store',
+    title: 'E-commerce',
   },
   {
     path: 'shop',

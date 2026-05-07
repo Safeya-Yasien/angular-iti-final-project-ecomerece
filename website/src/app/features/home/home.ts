@@ -5,7 +5,7 @@ import { ProductCard } from '../../layouts/components/product-card/product-card'
 import { ProductService } from '../../core/services/product.service';
 import { Product } from '../../core/models/product.model';
 import { Category } from '../../core/models/category.model';
-import { CategoryService } from '../../core/services/category.model';
+import { CategoryService } from '../../core/services/category.service';
 
 @Component({
   selector: 'app-home',
@@ -43,11 +43,6 @@ export class Home implements OnInit {
       },
       error: (err) => console.error('Error fetching categories:', err),
     });
-  }
-
-  addToCart(product: Product) {
-    console.log('Cart:', product);
-    alert(`${product.title} added to cart!`);
   }
 
   addToWishlist(product: Product) {

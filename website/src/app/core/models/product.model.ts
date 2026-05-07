@@ -11,9 +11,7 @@ export interface Product {
   images: Array<string>;
   category: {
     _id?: string;
-    name: string;
-    slug?: string;
-    image?: string;
+    title: string;
   };
 }
 
