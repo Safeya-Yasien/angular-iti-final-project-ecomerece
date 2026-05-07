@@ -23,9 +23,7 @@ export class CartPage implements OnInit {
   readonly cart = this.cartService.cart;
   readonly itemsCount = this.cartService.itemsCount;
   readonly totalPrice = this.cartService.totalPrice;
-  readonly isEmpty = computed(
-    () => !this.cart() || (this.cart()?.cartItems?.length ?? 0) === 0,
-  );
+  readonly isEmpty = computed(() => !this.cart() || (this.cart()?.cartItems?.length ?? 0) === 0);
 
   ngOnInit(): void {
     if (!this.auth.isAuthenticated()) {
@@ -46,9 +44,7 @@ export class CartPage implements OnInit {
   }
 
   productId(item: CartItem): string {
-    return typeof item.product === 'string'
-      ? item.product
-      : (item.product as CartProduct)._id;
+    return typeof item.product === 'string' ? item.product : (item.product as CartProduct)._id;
   }
 
   productView(item: CartItem): CartProduct | null {
