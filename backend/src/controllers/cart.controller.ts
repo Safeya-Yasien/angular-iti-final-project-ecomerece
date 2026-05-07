@@ -44,9 +44,14 @@ const add = async (req: any, res: any, next: any) => {
 
     await cart.save();
 
+    const populated = await cart.populate(
+      "cartItems.product",
+      "title imageCover price quantity",
+    );
+
     res.status(201).json({
       status: "success",
-      data: cart,
+      data: populated,
     });
   } catch (err) {
     next(err);
@@ -57,6 +62,7 @@ const getAll = async (req: any, res: any, next: any) => {
   try {
     const cart = await Cart.findOne({ user: req.user._id }).populate(
       "cartItems.product",
+      "title imageCover price quantity",
     );
 
     if (!cart) {
@@ -107,10 +113,15 @@ const update = async (req: any, res: any, next: any) => {
 
     await cart.save();
 
+    const populated = await cart.populate(
+      "cartItems.product",
+      "title imageCover price quantity",
+    );
+
     res.status(200).json({
       status: "success",
       message: "Item updated",
-      data: cart,
+      data: populated,
     });
   } catch (err) {
     next(err);
@@ -134,6 +145,8 @@ const removeItem = async (req: any, res: any, next: any) => {
         message: "Cart not found",
       });
     }
+
+    await cart.populate("cartItems.product", "title imageCover price quantity");
 
     res.status(200).json({
       status: "success",
