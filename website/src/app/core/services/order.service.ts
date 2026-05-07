@@ -24,6 +24,11 @@ export class OrderService {
   myOrders(): Observable<{ status: string; count?: number; data: unknown[] }> {
     return this.http.get<{ status: string; count?: number; data: unknown[] }>(
       `${this.base}/my-orders`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      },
     );
   }
 
