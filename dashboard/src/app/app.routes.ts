@@ -7,6 +7,8 @@ import { OrderManagementComponent } from './components/order-management/order-ma
 
 import { EditProductComponent } from './components/admin/edit-product/edit-product.component';
 import { Dashboard } from './components/admin/dashboard/dashboard';
+import { CategoryListComponent } from './components/categories/category-list/category-list.component';
+import { CategoryFormComponent } from './components/categories/category-form/category-form.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -21,6 +23,8 @@ export const routes: Routes = [
       { path: 'add-product', component: AddProductComponent },
       { path: 'edit-product/:id', component: EditProductComponent },
       { path: 'orders', component: OrderManagementComponent },
+      { path: 'categories', component: CategoryListComponent },
+      { path: 'add-category', component: CategoryFormComponent },
     ],
   },
 ];
