@@ -16,8 +16,8 @@ export class OrderService {
     return new HttpHeaders().set('Authorization', `Bearer ${token}`);
   }
 
-  getAllOrders(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl, { headers: this.getHeaders() });
+  getAllOrders(): Observable<any> {
+    return this.http.get<any>(this.apiUrl, { headers: this.getHeaders() });
   }
 
   updateOrderStatus(orderId: string, status: string): Observable<any> {

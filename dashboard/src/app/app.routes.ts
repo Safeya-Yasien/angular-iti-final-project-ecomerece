@@ -8,27 +8,19 @@ import { OrderManagementComponent } from './components/order-management/order-ma
 import { EditProductComponent } from './components/admin/edit-product/edit-product.component';
 import { Dashboard } from './components/admin/dashboard/dashboard';
 
-
-
 export const routes: Routes = [
-{ path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
 
-  { path: 'products', component: ProductListComponent},
-  { path: 'add-product', component:AddProductComponent },
-  { path: 'orders', component: OrderManagementComponent }
-
-,
-  { 
-    path: 'admin', 
+  {
+    path: 'admin',
     component: Dashboard,
     children: [
-      { path: '', redirectTo: 'products', pathMatch: 'full' }, 
+      { path: '', redirectTo: 'products', pathMatch: 'full' },
       { path: 'products', component: ProductListComponent },
       { path: 'add-product', component: AddProductComponent },
       { path: 'edit-product/:id', component: EditProductComponent },
-     
-    ]
-  }
-
+      { path: 'orders', component: OrderManagementComponent },
+    ],
+  },
 ];
