@@ -49,7 +49,7 @@ export class Navbar implements OnInit {
     this.auth.logout();
     this.cartService.resetLocal();
     this.closeUserMenu();
-    this.router.navigate(['/home']);
+    this.router.navigate(['']);
   }
 
   search(): void {

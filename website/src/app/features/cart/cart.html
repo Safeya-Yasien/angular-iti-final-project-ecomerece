@@ -20,9 +20,7 @@
   </div>
 
   @if (errorMessage()) {
-    <div
-      class="mb-4 rounded-lg bg-red-50 border border-red-200 text-red-700 text-sm px-4 py-2"
-    >
+    <div class="mb-4 rounded-lg bg-red-50 border border-red-200 text-red-700 text-sm px-4 py-2">
       {{ errorMessage() }}
     </div>
   }
@@ -30,9 +28,7 @@
   @if (loading()) {
     <div class="text-center py-20 text-slate-500">Loading your cart…</div>
   } @else if (isEmpty()) {
-    <div
-      class="text-center bg-white border border-slate-200 rounded-2xl py-16 px-6"
-    >
+    <div class="text-center bg-white border border-slate-200 rounded-2xl py-16 px-6">
       <p class="text-lg text-slate-600 mb-4">Your cart is empty.</p>
       <a
         routerLink="/shop"
@@ -45,11 +41,9 @@
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
       <div class="lg:col-span-2 space-y-3">
         @for (item of cart()!.cartItems; track productId(item)) {
-          <div
-            class="bg-white border border-slate-200 rounded-xl p-4 flex gap-4 items-center"
-          >
+          <div class="bg-white border border-slate-200 rounded-xl p-4 flex gap-4 items-center">
             <div
-              class="w-20 h-20 flex-shrink-0 rounded-lg bg-slate-100 overflow-hidden flex items-center justify-center"
+              class="w-20 h-20 shrink-0 rounded-lg bg-slate-100 overflow-hidden flex items-center justify-center"
             >
               @if (productView(item)?.imageCover) {
                 <img

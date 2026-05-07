@@ -45,11 +45,6 @@ export class Home implements OnInit {
     });
   }
 
-  addToCart(product: Product) {
-    console.log('Cart:', product);
-    alert(`${product.title} added to cart!`);
-  }
-
   addToWishlist(product: Product) {
     console.log('Wishlist:', product);
     alert(`${product.title} added to wishlist! ❤️`);
