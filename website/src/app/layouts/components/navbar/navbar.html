@@ -144,6 +144,14 @@
                   </p>
                 </div>
                 <a
+                  routerLink="/user-orders"
+                  routerLinkActive="!text-amber-400"
+                  (click)="closeUserMenu()"
+                  class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50"
+                >
+                  <i class="fa-solid fa-box-open mr-2 text-amber-500"></i> My Orders
+                </a>
+                <a
                   routerLink="/cart"
                   routerLinkActive="!text-amber-400"
                   (click)="closeUserMenu()"
