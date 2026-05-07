@@ -130,3 +130,16 @@ input:focus, textarea:focus {
   background-color: #f8f9fa;
   color: #2d3436;
 }
+
+select.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: white;
+    margin-top: 5px;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}

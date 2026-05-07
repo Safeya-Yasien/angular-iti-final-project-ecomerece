@@ -37,4 +37,9 @@ export class ProductService {
    
     return this.http.put(`${this.API_URL}/${id}`, productData, { headers: this.getHeaders() });
   }
+
+
+  getAllCategories(): Observable<any> {
+  return this.http.get('http://localhost:3000/api/categories'); 
+}
 }
