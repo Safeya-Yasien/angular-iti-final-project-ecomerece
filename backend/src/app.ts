@@ -16,6 +16,7 @@ const corsConfig = {
     "http://localhost:4200",
     "http://localhost:3000",
     "http://localhost:8080",
+    "http://localhost:63735",
     "https://angular-iti-final-project-ecomerece.vercel.app",
   ],
 };
