@@ -16,5 +16,5 @@ export const authGuard: CanActivateFn = (_route, state) => {
 export const guestGuard: CanActivateFn = () => {
   const token = inject(TokenService);
   const router = inject(Router);
-  return token.has() ? router.createUrlTree(['/home']) : true;
+  return token.has() ? router.createUrlTree(['']) : true;
 };

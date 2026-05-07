@@ -13,9 +13,7 @@ import { AuthService } from '../../../core/services/auth.service';
 function passwordsMatch(group: AbstractControl): ValidationErrors | null {
   const password = group.get('password')?.value;
   const confirm = group.get('confirmPassword')?.value;
-  return password && confirm && password !== confirm
-    ? { passwordMismatch: true }
-    : null;
+  return password && confirm && password !== confirm ? { passwordMismatch: true } : null;
 }
 
 @Component({
@@ -57,7 +55,7 @@ export class Register {
         this.auth.login({ email, password }).subscribe({
           next: () => {
             this.auth.fetchMe().subscribe();
-            this.router.navigateByUrl('/home');
+            this.router.navigateByUrl('');
           },
           error: () => {
             this.loading.set(false);
@@ -69,9 +67,7 @@ export class Register {
       error: (err) => {
         this.loading.set(false);
         this.errorMessage.set(
-          err?.error?.message ||
-            err?.error?.error ||
-            'Could not create account. Please try again.',
+          err?.error?.message || err?.error?.error || 'Could not create account. Please try again.',
         );
       },
     });
