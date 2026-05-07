@@ -1,17 +1,12 @@
 import { Component } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
-// 1. استدعي الكومبوننت بتاعك
-import { ProductListComponent } from './components/admin/product-list/product-list.component'; 
-import { LoginComponent } from './login/login.component';
-import { AddProductComponent } from './components/admin/product-form/product-form.component';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  // 2. ضيفيه هنا في الـ imports
-  imports: [RouterOutlet, RouterLink], 
+  imports: [RouterOutlet],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
 })
 export class AppComponent {
   title = 'iti-ecommerce-frontend';
