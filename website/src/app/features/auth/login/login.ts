@@ -43,16 +43,13 @@ export class Login {
       next: () => {
         this.auth.fetchMe().subscribe();
         this.cart.loadCart().subscribe();
-        const returnUrl =
-          this.route.snapshot.queryParamMap.get('returnUrl') || '/home';
+        const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '';
         this.router.navigateByUrl(returnUrl);
       },
       error: (err) => {
         this.loading.set(false);
         this.errorMessage.set(
-          err?.error?.error ||
-            err?.error?.message ||
-            'Invalid email or password',
+          err?.error?.error || err?.error?.message || 'Invalid email or password',
         );
       },
       complete: () => this.loading.set(false),
