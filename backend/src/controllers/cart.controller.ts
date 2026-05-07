@@ -55,7 +55,9 @@ const add = async (req: any, res: any, next: any) => {
 
 const getAll = async (req: any, res: any, next: any) => {
   try {
-    const cart = await Cart.findOne({ user: req.user._id });
+    const cart = await Cart.findOne({ user: req.user._id }).populate(
+      "cartItems.product",
+    );
 
     if (!cart) {
       return res.status(404).json({
