@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'angular-iti-final-project-ecomerece-backend.vercel.app/api',
+  apiUrl: 'https://angular-iti-final-project-ecomerece-backend.vercel.app/api',
 };
