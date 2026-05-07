@@ -44,11 +44,11 @@ export class CartPage implements OnInit {
   }
 
   productId(item: CartItem): string {
-    return typeof item.product === 'string' ? item.product : (item.product as CartProduct)._id;
+    return typeof item.product === 'object' ? item.product._id : item.product;
   }
 
   productView(item: CartItem): CartProduct | null {
-    return typeof item.product === 'string' ? null : (item.product as CartProduct);
+    return typeof item.product === 'object' ? item.product : null;
   }
 
   changeQty(item: CartItem, delta: number): void {
