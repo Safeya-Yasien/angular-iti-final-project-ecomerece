@@ -44,6 +44,11 @@ export const WEBSITE_ROUTES: Routes = [
     title: 'About Us',
   },
   {
+    path: 'orders',
+    loadComponent: () => import('../../features/orders/orders').then((c) => c.Orders),
+    title: 'My Orders',
+  },
+  {
     path: 'contact',
     loadComponent: () => import('../../features/contact/contact').then((c) => c.Contact),
     title: 'Contact Us',

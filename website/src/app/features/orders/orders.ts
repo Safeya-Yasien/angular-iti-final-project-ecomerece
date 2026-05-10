@@ -3,13 +3,13 @@ import { CommonModule } from '@angular/common';
 import { OrderService } from '../../core/services/order.service';
 import { RouterModule } from '@angular/router';
 @Component({
-  selector: 'app-user-orders',
+  selector: 'app-orders',
   standalone: true,
   imports: [CommonModule, RouterModule],
-  templateUrl: './user-orders.html',
-  styleUrls: ['./user-orders.css'],
+  templateUrl: './orders.html',
+  styleUrls: ['./orders.css'],
 })
-export class UserOrdersComponent implements OnInit {
+export class Orders implements OnInit {
   orders: any[] = [];
 
   constructor(private orderService: OrderService) {}
