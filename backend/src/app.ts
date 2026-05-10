@@ -19,6 +19,7 @@ const corsConfig = {
     "http://localhost:63735",
     "http://localhost:188.51.233.4",
     "https://angular-iti-final-project-ecomerece.vercel.app",
+    "https://angular-iti-final-project-ecomerece-three.vercel.app"
   ],
 };
 
