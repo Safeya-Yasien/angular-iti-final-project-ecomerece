@@ -8,19 +8,18 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { CategoryFormComponent } from '../category-form/category-form.component';
 import { CategoryService } from '../../../services/category.service';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-category-list',
   imports: [
-    CommonModule,
     MatTableModule,
     MatCardModule,
     MatProgressSpinnerModule,
     MatIconModule,
     MatButtonModule,
-    MatDialogModule,
-  ],
+    MatDialogModule
+],
   templateUrl: './category-list.component.html',
   styleUrls: ['./category-list.component.scss'],
 })

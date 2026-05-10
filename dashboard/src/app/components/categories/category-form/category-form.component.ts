@@ -14,19 +14,18 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { CommonModule } from '@angular/common';
+
 import { Category, CategoryService } from '../../../services/category.service';
 
 @Component({
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatSnackBarModule,
-  ],
+    MatSnackBarModule
+],
   selector: 'app-category-form',
 
   providers: [MatSnackBar],
@@ -38,47 +37,51 @@ import { Category, CategoryService } from '../../../services/category.service';
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Name</mat-label>
           <input matInput formControlName="name" placeholder="Category name" />
-          <mat-error *ngIf="form.get('name')?.hasError('required')"
-            >Name is required</mat-error
-          >
-        </mat-form-field>
-
-        <div class="file-upload-container">
-          <label for="categoryImage">Category Image</label>
-          <input
-            type="file"
-            id="categoryImage"
-            (change)="onFileSelected($event)"
-            accept="image/*"
-          />
-          <p *ngIf="!isEdit && !selectedFile" class="image-error">
-            Image is required for new categories
-          </p>
-        </div>
-
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Description</mat-label>
-          <textarea
-            matInput
-            formControlName="description"
-            rows="3"
-            placeholder="Optional description"
-          ></textarea>
-        </mat-form-field>
-      </form>
-    </mat-dialog-content>
-    <mat-dialog-actions align="end">
-      <button mat-button mat-dialog-close>Cancel</button>
-      <button
-        mat-raised-button
-        color="primary"
-        (click)="submit()"
-        [disabled]="form.invalid || loading || (!isEdit && !selectedFile)"
-      >
-        {{ loading ? 'Saving...' : isEdit ? 'Update' : 'Create' }}
-      </button>
-    </mat-dialog-actions>
-  `,
+          @if (form.get('name')?.hasError('required')) {
+            <mat-error
+              >Name is required</mat-error
+              >
+            }
+          </mat-form-field>
+    
+          <div class="file-upload-container">
+            <label for="categoryImage">Category Image</label>
+            <input
+              type="file"
+              id="categoryImage"
+              (change)="onFileSelected($event)"
+              accept="image/*"
+              />
+              @if (!isEdit && !selectedFile) {
+                <p class="image-error">
+                  Image is required for new categories
+                </p>
+              }
+            </div>
+    
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Description</mat-label>
+              <textarea
+                matInput
+                formControlName="description"
+                rows="3"
+                placeholder="Optional description"
+              ></textarea>
+            </mat-form-field>
+          </form>
+        </mat-dialog-content>
+        <mat-dialog-actions align="end">
+          <button mat-button mat-dialog-close>Cancel</button>
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="submit()"
+            [disabled]="form.invalid || loading || (!isEdit && !selectedFile)"
+            >
+            {{ loading ? 'Saving...' : isEdit ? 'Update' : 'Create' }}
+          </button>
+        </mat-dialog-actions>
+    `,
   styles: [
     `
       .full-width {

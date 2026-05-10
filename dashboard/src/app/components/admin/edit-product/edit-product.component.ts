@@ -7,13 +7,13 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../../../services/product.service';
-import { CommonModule } from '@angular/common';
+
 import Swal from 'sweetalert2';
 @Component({
   selector: 'app-edit-product',
   standalone: true,
 
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './edit-product.component.html',
   styleUrls: ['./edit-product.component.css'],
 })
