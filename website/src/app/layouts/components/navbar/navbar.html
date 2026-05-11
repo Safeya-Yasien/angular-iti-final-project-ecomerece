@@ -73,7 +73,8 @@
 
         @if (isAdmin()) {
           <a
-            routerLink="/admin"
+            (click)="goToDashboard($event)"
+            href="#"
             routerLinkActive="!text-amber-400"
             class="flex items-center gap-1 bg-orange-500/20 rounded-full px-3 py-1 text-gray-200 hover:text-amber-400 transition text-sm md:text-base cursor-pointer"
           >

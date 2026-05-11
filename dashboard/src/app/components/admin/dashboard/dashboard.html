@@ -4,7 +4,7 @@
     <div class="sidebar-header">
       <h2>Admin Panel</h2>
     </div>
-    
+
     <ul class="nav-links">
       <li>
         <a routerLink="/admin/products" routerLinkActive="active">
@@ -27,10 +27,8 @@
         </a>
       </li>
     </ul>
-    
-    <button class="logout-btn" (click)="onLogout()">
-      Logout
-    </button>
+
+    <button class="logout-btn" (click)="onLogout()">Logout</button>
   </aside>
 
   <!-- Main Area -->
@@ -38,7 +36,7 @@
     <header class="main-header">
       <h1>Dashboard Overview</h1>
     </header>
-    
+
     <div class="content-wrapper">
       <!-- Content from child components will appear here -->
       <router-outlet></router-outlet>

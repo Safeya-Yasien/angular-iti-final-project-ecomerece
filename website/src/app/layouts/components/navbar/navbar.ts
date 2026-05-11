@@ -1,18 +1,20 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
 import { CartService } from '../../../core/services/cart.service';
 import { TokenService } from '../../../core/services/token.service';
 
 @Component({
   selector: 'app-navbar',
+  standalone: true,
   imports: [CommonModule, FormsModule, RouterLink, RouterLinkActive],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
 })
 export class Navbar implements OnInit {
+  private route = inject(ActivatedRoute);
   private auth = inject(AuthService);
   private cartService = inject(CartService);
   private tokens = inject(TokenService);
@@ -31,12 +33,38 @@ export class Navbar implements OnInit {
   userMenuOpen = signal(false);
 
   ngOnInit(): void {
-    if (this.tokens.has()) {
-      this.auth.fetchMe().subscribe();
-      this.cartService.loadCart().subscribe();
-    }
+    this.route.queryParams.subscribe((params) => {
+      const tokenFromUrl = params['auth_token'];
+
+      if (tokenFromUrl) {
+        localStorage.setItem('auth_token', tokenFromUrl);
+
+        this.router.navigate([], {
+          queryParams: { auth_token: null },
+          queryParamsHandling: 'merge',
+          replaceUrl: true,
+        });
+      }
+
+      if (this.tokens.has() || tokenFromUrl) {
+        this.auth.fetchMe().subscribe();
+        this.cartService.loadCart().subscribe();
+      }
+    });
   }
 
+  goToDashboard(event: Event): void {
+    event.preventDefault();
+    const token = this.tokens.token;
+
+    const dashboardUrl = 'https://angular-iti-final-project-ecomerece-three.vercel.app/admin/';
+
+    if (token) {
+      window.location.href = `${dashboardUrl}`;
+    } else {
+      window.location.href = dashboardUrl;
+    }
+  }
   toggleUserMenu(): void {
     this.userMenuOpen.update((v) => !v);
   }
