@@ -8,6 +8,7 @@ import usersRoute from "./routes/user.route";
 import categoriesRoute from "./routes/category.route";
 import cartRoute from "./routes/cart.route";
 import ordersRoute from "./routes/order.route";
+import wishlistRoute from "./routes/wishlist.route";
 
 dotenv.config();
 connectDB();
@@ -19,7 +20,7 @@ const corsConfig = {
     "http://localhost:63735",
     "http://localhost:188.51.233.4",
     "https://angular-iti-final-project-ecomerece.vercel.app",
-    "https://angular-iti-final-project-ecomerece-three.vercel.app"
+    "https://angular-iti-final-project-ecomerece-three.vercel.app",
   ],
 };
 
@@ -33,6 +34,7 @@ app.use("/api/products", productsRoute);
 app.use("/api/categories", categoriesRoute);
 app.use("/api/cart", cartRoute);
 app.use("/api/orders", ordersRoute);
+app.use("/api/wishlist", wishlistRoute);
 
 app.get("/", (req: any, res: any) => {
   res.send("Hello World!");
