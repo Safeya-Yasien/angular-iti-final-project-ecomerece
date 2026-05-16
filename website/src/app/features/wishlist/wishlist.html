@@ -1,0 +1,41 @@
+<div class="container max-w-7xl mx-auto px-4 py-16 md:py-24">
+  <!-- Header section -->
+  <div class="relative pl-4 border-l-4 border-amber-400 mb-10">
+    <h2 class="text-3xl md:text-4xl font-black tracking-tight text-slate-900 uppercase">
+      My
+      <span class="text-transparent bg-clip-text bg-linear-to-r from-amber-500 to-orange-300">
+        Wishlist
+      </span>
+    </h2>
+    <p class="text-slate-500 text-sm mt-1">You have {{ wishlistProducts().length }} items saved.</p>
+  </div>
+
+  <!-- Products Grid Setup -->
+  @if (wishlistProducts().length > 0) {
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      @for (item of wishlistProducts(); track item._id) {
+        <app-product-card
+          [product]="item"
+          [isInWishlist]="true"
+          (add)="onAddToCart($event)"
+          (wishlist)="onRemoveFromWishlist($event)"
+        ></app-product-card>
+      }
+    </div>
+  } @else {
+    <!-- Empty State View -->
+    <div
+      class="flex flex-col items-center justify-center py-24 px-6 bg-slate-50 rounded-3xl border-2 border-dashed border-slate-200"
+    >
+      <div
+        class="w-20 h-20 bg-white rounded-full shadow-sm flex items-center justify-center mb-6 border border-slate-100 text-slate-300"
+      >
+        <i class="fa-solid fa-heart-crack text-3xl"></i>
+      </div>
+      <h3 class="text-xl font-bold text-slate-800 mb-2">Your wishlist is empty</h3>
+      <p class="text-slate-500 text-center max-w-xs mb-8">
+        Tap the heart icon on any product while browsing to save it here.
+      </p>
+    </div>
+  }
+</div>

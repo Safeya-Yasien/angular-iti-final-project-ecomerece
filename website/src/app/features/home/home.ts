@@ -8,6 +8,7 @@ import { Category } from '../../core/models/category.model';
 import { CategoryService } from '../../core/services/category.service';
 import { AuthService } from '../../core/services/auth.service';
 import { CartService } from '../../core/services/cart.service';
+import { WishlistService } from '../../core/services/wishlist.service';
 
 @Component({
   selector: 'app-home',
@@ -20,9 +21,11 @@ export class Home implements OnInit {
   categories = signal<Category[]>([]);
   addingProductId = signal<string | null>(null);
   toastMessage = signal<string | null>(null);
+  
 
   private auth = inject(AuthService);
   private cart = inject(CartService);
+  wishlist = inject(WishlistService);
   private router = inject(Router);
 
   constructor(
@@ -70,6 +73,27 @@ export class Home implements OnInit {
         this.showToast(err?.error?.message || 'Could not add item to cart.');
       },
     });
+  }
+
+  onToggleWishlist(productId: string): void {
+    if (!this.auth.isAuthenticated()) {
+      this.router.navigate(['/login'], {
+        queryParams: { returnUrl: this.router.url },
+      });
+      return;
+    }
+
+    if (this.wishlist.isInWishlist(productId)) {
+      this.wishlist.removeItem(productId).subscribe({
+        next: () => this.showToast('Removed from wishlist'),
+        error: (err) => this.showToast(err?.error?.message || 'Error removing from wishlist'),
+      });
+    } else {
+      this.wishlist.addToWishlist(productId).subscribe({
+        next: () => this.showToast('Added to wishlist'),
+        error: (err) => this.showToast(err?.error?.message || 'Error adding to wishlist'),
+      });
+    }
   }
 
   private showToast(msg: string): void {

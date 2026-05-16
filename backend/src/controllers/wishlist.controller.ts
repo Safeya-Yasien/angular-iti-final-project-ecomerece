@@ -106,4 +106,62 @@ const clear = async (req: any, res: any, next: any) => {
   }
 };
 
-export { add, getAll, clear };
+const remove = async (req: any, res: any, next: any) => {
+  try {
+    const { id } = req.params;
+
+    if (!id) {
+      return res.status(400).json({
+        status: "error",
+        message: "Product Id is required",
+      });
+    }
+    const product = await Product.findById(id);
+
+    if (!product) {
+      return res.status(404).json({
+        status: "error",
+        message: "Product not found",
+      });
+    }
+
+    let wishlist = await Wishlist.findOne({ user: req.user._id });
+
+    if (!wishlist) {
+      return res.status(404).json({
+        status: "error",
+        message: "Wishlist not found for this user",
+      });
+    }
+
+    const itemIndex = wishlist.wishlistItems.findIndex(
+      (item) => item.product.toString() === product._id.toString(),
+    );
+
+    if (itemIndex > -1) {
+      wishlist.wishlistItems.splice(itemIndex, 1);
+    } else {
+      return res.status(404).json({
+        status: "error",
+        message: "Product not found in wishlist",
+      });
+    }
+
+    await wishlist.save();
+
+    const populated = await wishlist.populate(
+      "wishlistItems.product",
+      "title imageCover price quantity",
+    );
+
+    res.status(200).json({
+      status: "success",
+      message: "Product removed from wishlist",
+      data: populated,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export { add, getAll, clear, remove };

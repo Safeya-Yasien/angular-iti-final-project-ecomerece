@@ -98,6 +98,13 @@
             >{{ cartCount() }}</span
           >
         </a>
+        <a
+          routerLink="/wishlist"
+          routerLinkActive="!text-amber-400"
+          class="border border-amber-400 p-1 rounded-md relative flex items-center gap-1 text-gray-200 hover:text-amber-400 transition px-2 py-1 text-sm md:text-base cursor-pointer"
+        >
+          <i class="fa-solid fa-heart text-amber-500"></i>
+        </a>
 
         @if (!isAuthenticated()) {
           <a

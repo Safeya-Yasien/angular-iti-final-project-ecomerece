@@ -72,6 +72,12 @@ export const WEBSITE_ROUTES: Routes = [
     title: 'Your Cart',
   },
   {
+    path: 'wishlist',
+    canActivate: [authGuard],
+    loadComponent: () => import('../../features/wishlist/wishlist').then((c) => c.Wishlist),
+    title: 'Your Wishlist',
+  },
+  {
     path: 'checkout',
     canActivate: [authGuard],
     loadComponent: () => import('../../features/checkout/checkout').then((c) => c.CheckoutPage),

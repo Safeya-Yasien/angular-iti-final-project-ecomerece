@@ -8,6 +8,7 @@ import { AuthService } from '../../../core/services/auth.service';
 import { CartService } from '../../../core/services/cart.service';
 import { CategoryService } from '../../../core/services/category.service';
 import { Category } from '../../../core/models/category.model';
+import { WishlistService } from '../../../core/services/wishlist.service';
 
 @Component({
   selector: 'app-product-list',
@@ -22,6 +23,7 @@ export class ProductList implements OnInit {
   private cdr = inject(ChangeDetectorRef);
   private auth = inject(AuthService);
   private cart = inject(CartService);
+  wishlist = inject(WishlistService);
   private router = inject(Router);
 
   allProducts: Product[] = [];
@@ -33,6 +35,9 @@ export class ProductList implements OnInit {
 
   ngOnInit(): void {
     this.loadInitialData();
+    if (this.auth.isAuthenticated()) {
+      this.wishlist.loadWishlist().subscribe();
+    }
   }
 
   loadInitialData(): void {
@@ -101,6 +106,27 @@ export class ProductList implements OnInit {
         this.showToast(err?.error?.message || 'Error adding to cart');
       },
     });
+  }
+
+  onToggleWishlist(productId: string): void {
+    if (!this.auth.isAuthenticated()) {
+      this.router.navigate(['/login'], {
+        queryParams: { returnUrl: this.router.url },
+      });
+      return;
+    }
+
+    if (this.wishlist.isInWishlist(productId)) {
+      this.wishlist.removeItem(productId).subscribe({
+        next: () => this.showToast('Removed from wishlist'),
+        error: (err) => this.showToast(err?.error?.message || 'Error removing from wishlist'),
+      });
+    } else {
+      this.wishlist.addToWishlist(productId).subscribe({
+        next: () => this.showToast('Added to wishlist'),
+        error: (err) => this.showToast(err?.error?.message || 'Error adding to wishlist'),
+      });
+    }
   }
 
   private showToast(msg: string): void {

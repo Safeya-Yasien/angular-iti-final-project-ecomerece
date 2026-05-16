@@ -47,7 +47,12 @@
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
     @if (!isLoading && filteredProducts.length > 0) {
       @for (item of filteredProducts; track item._id) {
-        <app-product-card [product]="item" (add)="onAddToCart($event)"></app-product-card>
+        <app-product-card
+          [product]="item"
+          (add)="onAddToCart($event)"
+          [isInWishlist]="wishlist.isInWishlist(item._id)"
+          (wishlist)="onToggleWishlist($event)"
+        ></app-product-card>
       }
     } @else if (isLoading) {
       @for (i of [1, 2, 3, 4, 5, 6, 7, 8]; track i) {
